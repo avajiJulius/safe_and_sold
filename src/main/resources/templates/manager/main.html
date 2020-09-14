@@ -8,7 +8,8 @@
 <div align="center">
     <h1>Users List</h1>
     <form action="#" th:action="@{/manager/}" method="get">
-        <input type="text" name="filter">
+        <input type="text" name="id" placeholder="find by id">
+        <input type="text" name="filter" placeholder="find by username">
         <button type="submit">Search</button>
     </form>
     <table border="1">

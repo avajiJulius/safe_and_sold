@@ -39,8 +39,11 @@ public class User {
 //    private UserStatus status;
     @Column(name = "active")
     private boolean active;
+    @Column( name = "exist", nullable = false, columnDefinition = "boolean default true")
+    private Boolean exist;
 
     public User() {
+        this.exist = true;
     }
 
     public long getId() {
@@ -129,5 +132,13 @@ public class User {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public Boolean isExist() {
+        return exist;
+    }
+
+    public void setExist(Boolean exist) {
+        this.exist = exist;
     }
 }

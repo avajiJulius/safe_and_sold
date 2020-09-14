@@ -1,4 +1,4 @@
-package com.safeandsold.shop.service;
+package com.safeandsold.shop.service.manager.main;
 
 import com.safeandsold.shop.domain.request.UserDeleteRequest;
 import com.safeandsold.shop.domain.request.UserRestoreRequest;

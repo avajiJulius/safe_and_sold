@@ -1,24 +1,42 @@
 package com.safeandsold.shop.domain;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "product")
 public class Product {
 
-    private long productId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "product_id")
+    private Long productId;
+    @Column(name = "product_name")
     private String productName;
 //    private IMG productPictures
+    @Column(name = "price")
     private int price;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
     private User owner;
+    @Column(name = "checked")
     private boolean checked;
+    @Column(name = "amount")
     private int amount;
+    @Column(name = "visible")
     private boolean visible;
 
     public Product() {
     }
 
-    public long getProductId() {
+    public String getOwnerName() {
+        return this.owner.getUsername();
+    }
+
+    public Long getProductId() {
         return productId;
     }
 
-    public void setProductId(long productId) {
+    public void setProductId(Long productId) {
         this.productId = productId;
     }
 

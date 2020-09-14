@@ -2,7 +2,7 @@ package com.safeandsold.shop.controller;
 
 import com.safeandsold.shop.domain.User;
 import com.safeandsold.shop.exception.UserNotFoundException;
-import com.safeandsold.shop.service.UserService;
+import com.safeandsold.shop.service.manager.ManagerUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,23 +17,29 @@ import java.util.List;
 @RequestMapping("/manager")
 public class UserController {
 
-    private final UserService userService;
+    private final ManagerUserService userService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(ManagerUserService userService) {
         this.userService = userService;
     }
 
     @GetMapping("/")
-    public String viewManagerHomePage(@RequestParam(required = false) String filter, Model model) throws UserNotFoundException {
+    public String viewManagerHomePage(@RequestParam(name = "id", required = false) String id,
+                                      @RequestParam(name = "filter", required = false) String filter,
+                                      Model model) throws UserNotFoundException {
         List<User> userList = new ArrayList<>();
-        if(filter != null && !filter.isEmpty()) {
-            User userById = userService.getUserById(Long.parseLong(filter));
+        if(id != null && !id.isEmpty()) {
+            User userById = userService.findById(Long.parseLong(id));
             userList.add(userById);
-        } else {
-            userList = userService.getAllUsers();
+        } else if (filter != null && !filter.isEmpty()){
+            userList = userService.findByUsername(filter);
+        }
+        else {
+            userList = userService.findAllUsers();
         }
         model.addAttribute("userList", userList);
+        model.addAttribute("id", id);
         model.addAttribute("filter", filter);
         return "manager/main";
     }
