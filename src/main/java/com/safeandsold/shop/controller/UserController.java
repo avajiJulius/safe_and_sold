@@ -28,15 +28,12 @@ public class UserController {
     public String viewManagerHomePage(@RequestParam(name = "id", required = false) String id,
                                       @RequestParam(name = "filter", required = false) String filter,
                                       Model model) throws UserNotFoundException {
-        List<User> userList = new ArrayList<>();
+        List<User> userList = userService.findAllUsers();
         if(id != null && !id.isEmpty()) {
             User userById = userService.findById(Long.parseLong(id));
             userList.add(userById);
         } else if (filter != null && !filter.isEmpty()){
             userList = userService.findByUsername(filter);
-        }
-        else {
-            userList = userService.findAllUsers();
         }
         model.addAttribute("userList", userList);
         model.addAttribute("id", id);

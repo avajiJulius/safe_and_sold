@@ -3,6 +3,7 @@ package com.safeandsold.shop.service;
 import com.safeandsold.shop.domain.Product;
 import com.safeandsold.shop.exception.ProductNotFoundException;
 import com.safeandsold.shop.repository.ProductRepository;
+import com.safeandsold.shop.service.manager.ManagerProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProductServiceImpl implements ProductService {
+public class ProductServiceImpl implements ProductService, ManagerProductService {
 
     private final ProductRepository productRepository;
 
@@ -49,6 +50,19 @@ public class ProductServiceImpl implements ProductService {
             return productList;
         }
         throw new ProductNotFoundException("Product whit this product name is Not Found");
+    }
+
+    @Override
+    public void editCheckStatus(Long productId) {
+        Optional<Product> optional = productRepository.findById(productId);
+        if(!optional.isEmpty() && optional != null) {
+            boolean status = optional.get().isChecked();
+            if(status == false) {
+                status = true;
+            } else {
+                status = false;
+            }
+        }
     }
 
     @Override

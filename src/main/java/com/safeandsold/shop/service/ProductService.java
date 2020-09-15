@@ -10,6 +10,5 @@ public interface ProductService {
     Product findById(Long productId) throws ProductNotFoundException;
     List<Product> findByPrice(Integer minPrice, Integer maxPrice) throws ProductNotFoundException;
     List<Product> findByProductName(String productName) throws ProductNotFoundException;
-    void deleteById(Long productId);
-    void saveProduct(Product product);
+
 }

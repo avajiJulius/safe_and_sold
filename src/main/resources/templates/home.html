@@ -6,6 +6,14 @@
 </head>
 <body>
 <a th:href = "@{/manager/}">Manager User Service</a>
+<form>
+    <input type="text" name="productName" placeholder="product name">
+    <p>Price
+        <input type="number" name="minPrice" placeholder="min">
+        <input type="number" name="maxPrice" placeholder="max">
+    </p>
+    <button type="submit">Search</button>
+</form>
 <table border="1">
     <thead>
     <tr>
