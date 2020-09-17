@@ -1,7 +1,6 @@
 package com.safeandsold.shop.service;
 
 import com.safeandsold.shop.domain.Product;
-import com.safeandsold.shop.exception.ProductNotFoundException;
 import com.safeandsold.shop.repository.ProductRepository;
 import com.safeandsold.shop.service.manager.ManagerProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,42 +25,31 @@ public class ProductServiceImpl implements ProductService, ManagerProductService
     }
 
     @Override
-    public Product findById(Long productId) throws ProductNotFoundException {
+    public Product findById(Long productId) {
         Optional<Product> byId = productRepository.findById(productId);
-        if(!byId.isEmpty() && byId!=null) {
-            return byId.get();
-        }
-        throw new ProductNotFoundException("Product whit this ID is Not Found");
+        return byId.get();
     }
 
     @Override
-    public List<Product> findByPrice(Integer minPrice, Integer maxPrice) throws ProductNotFoundException {
+    public List<Product> findByPrice(Integer minPrice, Integer maxPrice) {
         List<Product> productList = productRepository.findByPrice(minPrice, maxPrice);
-        if(!productList.isEmpty() && productList != null) {
-            return productList;
-        }
-        throw new ProductNotFoundException("Product whit this price is Not Found");
+        return productList;
     }
 
     @Override
-    public List<Product> findByProductName(String productName) throws ProductNotFoundException {
+    public List<Product> findByProductName(String productName)  {
         List<Product> productList = productRepository.findByProductName(productName);
-        if(!productList.isEmpty() && productList != null) {
-            return productList;
-        }
-        throw new ProductNotFoundException("Product whit this product name is Not Found");
+        return productList;
     }
 
     @Override
     public void editCheckStatus(Long productId) {
         Optional<Product> optional = productRepository.findById(productId);
-        if(!optional.isEmpty() && optional != null) {
-            boolean status = optional.get().isChecked();
-            if(status == false) {
-                status = true;
-            } else {
-                status = false;
-            }
+        boolean status = optional.get().isChecked();
+        if(status == false) {
+            status = true;
+        } else {
+            status = false;
         }
     }
 

@@ -1,35 +1,36 @@
 package com.safeandsold.shop.domain;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
-@Table(name = "product")
+@Table(name = "products")
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "product_id")
     private Long productId;
+    @ElementCollection(targetClass = Category.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "category", joinColumns = @JoinColumn(name = "product_id"))
+    @Enumerated(EnumType.STRING)
+    @Column(name = "category")
+    private Set<Category> category;
     @Column(name = "product_name")
     private String productName;
-//    private IMG productPictures
     @Column(name = "price")
     private int price;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "owner_id")
     private User owner;
     @Column(name = "checked")
     private boolean checked;
-    @Column(name = "amount")
-    private int amount;
+    @Column(name = "quantity")
+    private int quantity;
     @Column(name = "visible")
     private boolean visible;
 
     public Product() {
-    }
-
-    public String getOwnerName() {
-        return this.owner.getUsername();
     }
 
     public Long getProductId() {
@@ -38,6 +39,14 @@ public class Product {
 
     public void setProductId(Long productId) {
         this.productId = productId;
+    }
+
+    public Set<Category> getCategory() {
+        return category;
+    }
+
+    public void setCategory(Set<Category> category) {
+        this.category = category;
     }
 
     public String getProductName() {
@@ -72,12 +81,12 @@ public class Product {
         this.checked = checked;
     }
 
-    public int getAmount() {
-        return amount;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public boolean isVisible() {

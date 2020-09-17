@@ -1,8 +1,6 @@
 package com.safeandsold.shop.service;
 
 import com.safeandsold.shop.domain.User;
-import com.safeandsold.shop.domain.UserStatus;
-import com.safeandsold.shop.exception.UserNotFoundException;
 import com.safeandsold.shop.repository.UserRepository;
 import com.safeandsold.shop.service.manager.ManagerUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,35 +44,23 @@ public class UserServiceImpl implements UserService, ManagerUserService {
     }
 
     @Override
-    public User findById(Long id) throws UserNotFoundException {
+    public User findById(Long id){
         Optional<User> optional = userRepository.findById(id);
-        if(optional.isEmpty()) {
-            throw new UserNotFoundException();
-        }
         return optional.get();
     }
 
     @Override
-    public List<User> findByUsername(String filter) throws UserNotFoundException {
+    public List<User> findByUsername(String filter) {
         List<User> userList = new ArrayList<>();
         if(filter != null && !filter.isEmpty()) {
             userList = userRepository.findByUsername(filter);
         } else {
             userList = userRepository.findAll();
         }
-
-        if(userList.isEmpty()) {
-            throw new UserNotFoundException();
-        }
-
         return userList;
 
     }
 
-    @Override
-    public boolean editStatus(Long userId, UserStatus status) {
-        return false;
-    }
 
     @Override
     public void userDeleteRequest(Long userId) {

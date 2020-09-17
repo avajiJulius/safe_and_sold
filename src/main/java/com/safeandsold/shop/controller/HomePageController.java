@@ -1,9 +1,7 @@
 package com.safeandsold.shop.controller;
 
 import com.safeandsold.shop.domain.Product;
-import com.safeandsold.shop.exception.ProductNotFoundException;
 import com.safeandsold.shop.service.ProductService;
-import com.safeandsold.shop.service.user.GuestProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +25,7 @@ public class HomePageController {
             @RequestParam(name = "minPrice", required = false) Integer min,
             @RequestParam(name = "maxPrice", required = false) Integer max,
             @RequestParam(name = "productName", required = false) String productName,
-            Model model) throws ProductNotFoundException {
+            Model model){
 
         List<Product> productList = productService.findAllProduct();
         if(min != null && max != null) {

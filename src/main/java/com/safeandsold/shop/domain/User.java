@@ -1,17 +1,19 @@
 package com.safeandsold.shop.domain;
 
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
-@Table(name = "usr")
+@Table(name = "users")
 public class User {
 
     @Id
-    @GeneratedValue
-    private long id;
-    @Column(name = "username")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "user_id")
+    private Long id;
+    @Column(name = "username", nullable = false)
     private String username;
     @Column(name = "first_name")
     private String firstName;
@@ -21,36 +23,37 @@ public class User {
     private String patronymic;
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
+
     @Column(name = "email")
     private String email;
-//    private String password;
-
-
-//    private Set<Product> productSetForSale;
-//    private Set<Product> shoppingBasket;
+    @Column(name = "password")
+    private String password;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
+    @CollectionTable(name = "roles", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     @Column(name = "roles")
     private Set<Role> roles;
-//    @Enumerated(EnumType.STRING)
-//    @Column(name = "status")
-//    private UserStatus status;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
+    private Set<Product> userProducts;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "buyer")
+    private Set<Order> userOrders;
+
     @Column(name = "active")
     private boolean active;
-    @Column( name = "exist", nullable = false, columnDefinition = "boolean default true")
-    private Boolean exist;
+    @Column( name = "exist")
+    private boolean exist;
 
     public User() {
-        this.exist = true;
     }
 
-    public long getId() {
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -102,21 +105,13 @@ public class User {
         this.email = email;
     }
 
-//    public Set<Product> getProductSetForSale() {
-//        return productSetForSale;
-//    }
-//
-//    public void setProductSetForSale(Set<Product> productSetForSale) {
-//        this.productSetForSale = productSetForSale;
-//    }
-//
-//    public Set<Product> getShoppingBasket() {
-//        return shoppingBasket;
-//    }
-//
-//    public void setShoppingBasket(Set<Product> shoppingBasket) {
-//        this.shoppingBasket = shoppingBasket;
-//    }
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public Set<Role> getRoles() {
         return roles;
@@ -124,6 +119,22 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public Set<Product> getUserProducts() {
+        return userProducts;
+    }
+
+    public void setUserProducts(Set<Product> userProducts) {
+        this.userProducts = userProducts;
+    }
+
+    public Set<Order> getUserOrders() {
+        return userOrders;
+    }
+
+    public void setUserOrders(Set<Order> userOrders) {
+        this.userOrders = userOrders;
     }
 
     public boolean isActive() {
@@ -134,11 +145,11 @@ public class User {
         this.active = active;
     }
 
-    public Boolean isExist() {
+    public boolean isExist() {
         return exist;
     }
 
-    public void setExist(Boolean exist) {
+    public void setExist(boolean exist) {
         this.exist = exist;
     }
 }

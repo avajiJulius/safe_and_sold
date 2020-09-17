@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface UserRepository  extends JpaRepository<User, Long> {
     @Query(name = "User.findById",
-    value = "select u from User u where u.id = :id")
+    value = "select u from User u where user_id = :id")
     Optional<User> findById(@Param("id") Long id);
     @Query(name = "User.findByUsername",
     value = "select u from User u where upper(u.username) = upper(:username)")
