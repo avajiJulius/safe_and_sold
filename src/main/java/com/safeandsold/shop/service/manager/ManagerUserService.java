@@ -2,7 +2,6 @@ package com.safeandsold.shop.service.manager;
 
 import com.safeandsold.shop.domain.User;
 
-
 import java.util.List;
 
 public interface ManagerUserService

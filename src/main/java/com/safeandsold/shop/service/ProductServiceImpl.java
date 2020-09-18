@@ -1,8 +1,10 @@
 package com.safeandsold.shop.service;
 
+import com.safeandsold.shop.domain.OrderItem;
 import com.safeandsold.shop.domain.Product;
 import com.safeandsold.shop.repository.ProductRepository;
 import com.safeandsold.shop.service.manager.ManagerProductService;
+import com.safeandsold.shop.service.user.UserProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProductServiceImpl implements ProductService, ManagerProductService {
+public class ProductServiceImpl implements ProductService, ManagerProductService, UserProductService {
 
     private final ProductRepository productRepository;
 
@@ -59,7 +61,13 @@ public class ProductServiceImpl implements ProductService, ManagerProductService
     }
 
     @Override
-    public void saveProduct(Product product) {
-        this.productRepository.save(product);
+    public Long saveProduct(Product product) {
+        Product save = this.productRepository.save(product);
+        return save.getProductId();
+    }
+
+    @Override
+    public boolean addProductToOrder(OrderItem item) {
+        throw new UnsupportedOperationException();
     }
 }

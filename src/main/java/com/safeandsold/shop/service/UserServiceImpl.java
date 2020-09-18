@@ -28,13 +28,12 @@ public class UserServiceImpl implements UserService, ManagerUserService {
 
     @Override
     public void restoreByIdAndPassword(Long userId, String password) {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Long saveUser(User user) {
         User save = this.userRepository.save(user);
-
         return save.getId();
     }
 
@@ -55,7 +54,7 @@ public class UserServiceImpl implements UserService, ManagerUserService {
         if(filter != null && !filter.isEmpty()) {
             userList = userRepository.findByUsername(filter);
         } else {
-            userList = userRepository.findAll();
+            userList =  userRepository.findAll();
         }
         return userList;
 
@@ -64,12 +63,12 @@ public class UserServiceImpl implements UserService, ManagerUserService {
 
     @Override
     public void userDeleteRequest(Long userId) {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void userRestoreRequest(Long userId) {
-
+        throw new UnsupportedOperationException();
     }
 
 }

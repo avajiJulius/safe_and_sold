@@ -1,6 +1,8 @@
 package com.safeandsold.shop.domain;
 
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Set;
@@ -10,10 +12,10 @@ import java.util.Set;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
-    @Column(name = "username", nullable = false)
+    @Column(name = "username")
     private String username;
     @Column(name = "first_name")
     private String firstName;
@@ -21,6 +23,7 @@ public class User {
     private String lastName;
     @Column(name = "patronymic")
     private String patronymic;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
 

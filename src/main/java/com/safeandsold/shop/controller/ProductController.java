@@ -3,6 +3,7 @@ package com.safeandsold.shop.controller;
 import com.safeandsold.shop.domain.Product;
 import com.safeandsold.shop.service.ProductService;
 import com.safeandsold.shop.service.manager.ManagerProductService;
+import com.safeandsold.shop.service.user.UserProductService;
 import org.apache.catalina.Manager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,10 +13,10 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class ProductController {
 
-    private ManagerProductService productService;
+    private UserProductService productService;
 
     @Autowired
-    public ProductController(ManagerProductService productService) {
+    public ProductController(UserProductService productService) {
         this.productService = productService;
     }
 
